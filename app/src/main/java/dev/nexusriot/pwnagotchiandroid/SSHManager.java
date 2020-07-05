@@ -95,6 +95,18 @@ public class SSHManager
         }
     }
 
+    public void downloadFile(String remote, String local) throws JSchException, SftpException {
+        Channel channel = session.openChannel( "sftp" );
+        channel.connect();
+
+        ChannelSftp sftpChannel = (ChannelSftp) channel;
+
+        sftpChannel.get(remote, local );
+        //InputStream in = sftpChannel.get( "remote-file" );
+        // process inputstream as needed
+        sftpChannel.exit();
+    }
+
     private String logError(String errorMessage)
     {
         if(errorMessage != null)
